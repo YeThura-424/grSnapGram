@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SignupValidation } from "@/lib/validation";
+import { toast } from "sonner";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
@@ -19,6 +20,8 @@ import { createUserAccount } from "@/lib/appwrite/api";
 
 const SignupForm = () => {
   const isLoading = false;
+  // const { toast } = useToast();
+
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -33,7 +36,12 @@ const SignupForm = () => {
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
     const userAccount = await createUserAccount(values);
 
-    console.log(userAccount);
+    if (!userAccount) {
+      // toast({ title: "Sign up failed. Please try again." });
+      toast("Sign up failed. Please try again.");
+
+      return;
+    }
   }
 
   return (
