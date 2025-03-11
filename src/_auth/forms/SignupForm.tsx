@@ -15,17 +15,21 @@ import { SignupValidation } from "@/lib/validation";
 import { toast } from "sonner";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   useCreateUserAccount,
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/contex/AuthContex";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+
   const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
     useCreateUserAccount();
 
-  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+  const { mutateAsync: signInAccount, isPending: isSigningInUser } =
     useSignInAccount();
 
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -39,7 +43,7 @@ const SignupForm = () => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+  const handleSignup = async (values: z.infer<typeof SignupValidation>) => {
     const userAccount = await createUserAccount(values);
 
     if (!userAccount) {
@@ -52,9 +56,25 @@ const SignupForm = () => {
     });
 
     if (!session) {
-      return toast("Sign up failed. Please try again.");
+      toast("Sign up failed. Please try again.");
+
+      navigate("/sign-in");
+
+      return;
     }
-  }
+
+    const isLoggedIn = await checkAuthUser();
+
+    if (isLoggedIn) {
+      form.reset();
+
+      navigate("/");
+    } else {
+      toast("Login failed. Please try again.");
+
+      return;
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-svh">
@@ -69,7 +89,7 @@ const SignupForm = () => {
             To use GrSnapGram, please enter your details
           </p>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(handleSignup)}
             className="flex flex-col gap-5 mt-4"
           >
             <FormField
@@ -145,7 +165,7 @@ const SignupForm = () => {
               )}
             />
             <Button type="submit" className="shad-button_primary">
-              {isCreatingAccount ? (
+              {isCreatingAccount || isSigningInUser || isUserLoading ? (
                 <div className="flex-center gap-2">
                   <Loader />
                 </div>
