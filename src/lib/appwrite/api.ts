@@ -73,7 +73,7 @@ export async function getAccount() {
 
 export async function getCurrentUser() {
   try {
-    const currentAccount = await getAccount();
+    const currentAccount = await account.get();
 
     if (!currentAccount) throw Error;
 
