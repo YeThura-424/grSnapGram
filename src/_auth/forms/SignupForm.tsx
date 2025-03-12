@@ -20,7 +20,7 @@ import {
   useCreateUserAccount,
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
-import { useUserContext } from "@/contex/AuthContex";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const navigate = useNavigate();
