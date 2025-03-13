@@ -51,12 +51,12 @@ const SignupForm = () => {
     }
 
     const session = signInAccount({
-      email: values.email,
+      email: values.username,
       password: values.password,
     });
 
     if (!session) {
-      toast("Sign up failed. Please try again.");
+      // toast("Sign up failed. Please try again.");
 
       navigate("/sign-in");
 
@@ -70,7 +70,7 @@ const SignupForm = () => {
 
       navigate("/");
     } else {
-      toast("Login failed. Please try again.");
+      // toast("Login failed. Please try again.");
 
       return;
     }
