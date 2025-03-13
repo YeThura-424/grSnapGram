@@ -39,9 +39,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const checkAuthUser = async () => {
+    console.log("logging here before get account");
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
+      console.log("logging here before get account");
       if (currentAccount) {
         setUser({
           id: currentAccount.$id,
@@ -66,8 +68,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const cookieFallback = localStorage.getItem("cookieFallback");
-    if (cookieFallback === "[]" || cookieFallback === null) {
+    if (localStorage.getItem("cookieFallback")) {
       navigate("/sign-in");
     }
 
