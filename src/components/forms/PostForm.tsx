@@ -18,7 +18,7 @@ import {
 import { PostValidation } from "@/lib/validation";
 import { toast } from "sonner";
 import { useUserContext } from "@/context/AuthContext";
-import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations";
 import FileUploader from "../shared/FileUploader";
 import Loader from "../shared/Loader";
 
@@ -43,25 +43,26 @@ const PostForm = ({ post, action }: PostFormProps) => {
   // Query
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
-  // const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
-  //   useUpdatePost();
+  
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
+    useUpdatePost();
 
   // Handler
   const handleSubmit = async (value: z.infer<typeof PostValidation>) => {
     // ACTION = UPDATE
-    // if (post && action === "Update") {
-    //   const updatedPost = await updatePost({
-    //     ...value,
-    //     postId: post.$id,
-    //     imageId: post.imageId,
-    //     imageUrl: post.imageUrl,
-    //   });
+    if (post && action === "Update") {
+      const updatedPost = await updatePost({
+        ...value,
+        postId: post.$id,
+        imageId: post.imageId,
+        imageUrl: post.imageUrl,
+      });
 
-    //   if (!updatedPost) {
-    //     toast(`${action} post failed. Please try again.`);
-    //   }
-    //   return navigate(`/posts/${post.$id}`);
-    // }
+      if (!updatedPost) {
+        toast(`${action} post failed. Please try again.`);
+      }
+      return navigate(`/posts/${post.$id}`);
+    }
 
     // ACTION = CREATE
     const newPost = await createPost({
@@ -161,9 +162,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
-            disabled={isLoadingCreate}
+            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            {isLoadingCreate && <Loader />}
+            {isLoadingCreate || isLoadingUpdate && <Loader />}
             {action} Post
           </Button>
         </div>
