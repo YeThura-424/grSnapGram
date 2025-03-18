@@ -6,6 +6,7 @@ import { useGetPosts, useSearchPosts } from "@/lib/react-query/queriesAndMutatio
 import Loader from "@/components/shared/Loader";
 import GridPostList from "@/components/shared/GridPostList";
 import SearchResults from "@/components/shared/SearchResults";
+import { useInView } from 'react-intersection-observer'
 
 export type SearchResultProps = {
   isSearchFetching: boolean;
@@ -14,16 +15,16 @@ export type SearchResultProps = {
 
 const Explore = () => {
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-
+  const {ref, inView} = useInView()
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearch = useDebounce(searchValue, 500);
   const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPosts(debouncedSearch);
 
   useEffect(() => {
-    if (!searchValue) {
+    if (inView && !searchValue) {
       fetchNextPage();
     }
-  }, [searchValue]);
+  }, [inView, searchValue]);
 
   if (!posts)
     return (
@@ -90,7 +91,7 @@ const Explore = () => {
       </div>
 
       {hasNextPage && !searchValue && (
-        <div className="mt-10">
+        <div ref={ref}  className="mt-10">
           <Loader />
         </div>
       )}
