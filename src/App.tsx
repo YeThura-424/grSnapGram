@@ -1,7 +1,7 @@
 import AuthLayout from "./_auth/AuthLayout";
 import SigninForm from "./_auth/forms/SigninForm";
 import SignupForm from "./_auth/forms/SignupForm";
-import { CreatePost, EditPost, Explore, Home, PostDetail } from "./_root/pages";
+import { AllUsers, CreatePost, EditPost, Explore, Home, PostDetail } from "./_root/pages";
 import RootLayout from "./_root/RootLayout";
 import "./globals.css";
 import { Route, Routes } from "react-router-dom";
@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:id" element={<EditPost />} />
           <Route path="/posts/:id" element={<PostDetail />} />
+          <Route path="/all-users" element={<AllUsers />} />
         </Route>
       </Routes>
     </main>
