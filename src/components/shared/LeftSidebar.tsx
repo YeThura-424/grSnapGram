@@ -25,7 +25,7 @@ const LeftSidebar = () => {
   };
 
   return (
-    <nav className="leftsidebar">
+    <nav className="leftsidebar overflow-auto custom-scrollbar">
       <div className="flex flex-col gap-11">
         <Link to="/" className="flex gap-3 items-center">
           <img
@@ -84,14 +84,16 @@ const LeftSidebar = () => {
         </ul>
       </div>
 
-      <Button
-        variant="ghost"
-        className="shad-button_ghost"
-        onClick={(e) => handleSignOut(e)}
-      >
-        <img src="/assets/icons/logout.svg" alt="logout" />
-        <p className="small-medium lg:base-medium">Logout</p>
-      </Button>
+      <div className="left-sidebar-footer pt-4">
+        <Button
+          variant="ghost"
+          className="shad-button_ghost"
+          onClick={(e) => handleSignOut(e)}
+        >
+          <img src="/assets/icons/logout.svg" alt="logout" />
+          <p className="small-medium lg:base-medium">Logout</p>
+        </Button>
+      </div>
     </nav>
   );
 };
