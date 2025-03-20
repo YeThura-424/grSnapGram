@@ -18,6 +18,7 @@ import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById, useUpdateUser } from "@/lib/react-query/queriesAndMutations";
 import Loader from "@/components/shared/Loader";
 import { toast } from "sonner";
+import ProfileUploader from "@/components/shared/ProfileUploader";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -89,6 +90,21 @@ const UpdateProfile = () => {
             onSubmit={form.handleSubmit(handleUpdate)}
             className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
             
+            <FormField
+              control={form.control}
+              name="file"
+              render={({ field }) => (
+                <FormItem className="flex">
+                  <FormControl>
+                    <ProfileUploader
+                      fieldChange={field.onChange}
+                      mediaUrl={currentUser.imageUrl}
+                    />
+                  </FormControl>
+                  <FormMessage className="shad-form_message" />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
