@@ -6,6 +6,7 @@ import PostCard from "@/components/shared/PostCard";
 import UserCard from "@/components/shared/UserCard";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import GridPostList from "@/components/shared/GridPostList";
 
 const Home = () => {
   // const {
@@ -31,26 +32,29 @@ const Home = () => {
   },[inView])
 
 
-  // if (isErrorPosts || isErrorCreators) {
-  //   return (
-  //     <div className="flex flex-1">
-  //       <div className="home-container">
-  //         <p className="body-medium text-light-1">Something bad happened</p>
-  //       </div>
-  //       <div className="home-creators">
-  //         <p className="body-medium text-light-1">Something bad happened</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if ( isErrorCreators) {
+    return (
+      <div className="flex flex-1">
+        <div className="home-container">
+          <p className="body-medium text-light-1">Something bad happened</p>
+        </div>
+        <div className="home-creators">
+          <p className="body-medium text-light-1">Something bad happened</p>
+        </div>
+      </div>
+    );
+  }
   if (!posts)
     return (
       <div className="flex-center w-full h-full">
         <Loader />
       </div>
     );
+  
+  console.log('logging herererer', posts)
 
   return (
+    
     <div className="flex flex-1">
       <div className="home-container">
         <div className="home-posts">
@@ -64,13 +68,11 @@ const Home = () => {
               ))} */}
               {shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
-        ) : (
-          posts.pages.map((item, index) => (
-            // <GridPostList key={`page-${index}`} posts={item.documents} />
-            <li key={index} className="flex justify-center w-full">
-                  <PostCard post={item?.documents} />
-                </li>
-          ))
+              ) : (
+                  // <div>Nothing...</div>
+                  posts.pages.map((item) => (
+                    <PostCard post={item?.documents} />
+                  ))
         )}
             </ul>
           }
