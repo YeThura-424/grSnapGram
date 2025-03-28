@@ -7,6 +7,7 @@ import UserCard from "@/components/shared/UserCard";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import GridPostList from "@/components/shared/GridPostList";
+import HomePageItem from "@/components/shared/HomePageItem";
 
 const Home = () => {
   // const {
@@ -60,22 +61,11 @@ const Home = () => {
         <div className="home-posts">
           <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
           {shouldShowPosts ? (<p className="text-light-4 mt-10 text-center w-full">End of posts</p>) :
-            <ul className="flex flex-col flex-1 gap-9 w-full ">
-              {/* {posts?.documents.map((post: Models.Document) => (
-                <li key={post.$id} className="flex justify-center w-full">
-                  <PostCard post={post} />
-                </li>
-              ))} */}
-              {shouldShowPosts ? (
-          <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
-              ) : (
-                  // <div>Nothing...</div>
-                  posts.pages.map((item) => (
-                    <PostCard post={item?.documents} />
-                  ))
-        )}
-            </ul>
-          }
+            (
+          posts.pages.map((item) => (
+            <HomePageItem posts={item?.documents} />
+          ))
+          )}
         </div>
       </div>
 
