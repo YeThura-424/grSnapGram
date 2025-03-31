@@ -2,11 +2,9 @@ import { Models } from "appwrite";
 
 import { useGetPosts, useGetRecentPosts, useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import Loader from "@/components/shared/Loader";
-import PostCard from "@/components/shared/PostCard";
 import UserCard from "@/components/shared/UserCard";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import GridPostList from "@/components/shared/GridPostList";
 import HomePageItem from "@/components/shared/HomePageItem";
 
 const Home = () => {
@@ -30,10 +28,10 @@ const Home = () => {
     if (inView) {
       fetchNextPage()
     }
-  },[inView])
+  }, [inView])
 
 
-  if ( isErrorCreators) {
+  if (isErrorCreators) {
     return (
       <div className="flex flex-1">
         <div className="home-container">
@@ -51,29 +49,23 @@ const Home = () => {
         <Loader />
       </div>
     );
-  
+
   console.log('logging herererer', posts)
 
   return (
-    
+
     <div className="flex flex-1">
       <div className="home-container">
         <div className="home-posts">
           <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
           {shouldShowPosts ? (<p className="text-light-4 mt-10 text-center w-full">End of posts</p>) :
             (
-          posts.pages.map((item) => (
-            <HomePageItem posts={item?.documents} />
-          ))
-          )}
+              posts.pages.map((item) => (
+                <HomePageItem posts={item?.documents} />
+              ))
+            )}
         </div>
       </div>
-
-      {hasNextPage && (
-        <div ref={ref}  className="mt-10">
-          <Loader />
-        </div>
-      )}
 
       <div className="home-creators">
         <h3 className="h3-bold text-light-1">Top Creators</h3>
@@ -89,6 +81,12 @@ const Home = () => {
           </ul>
         )}
       </div>
+
+      {hasNextPage && (
+        <div ref={ref} className="mt-10">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };
