@@ -18,7 +18,10 @@ import {
 import { PostValidation } from "@/lib/validation";
 import { toast } from "sonner";
 import { useUserContext } from "@/context/AuthContext";
-import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations";
+import {
+  useCreatePost,
+  useUpdatePost,
+} from "@/lib/react-query/queriesAndMutations";
 import FileUploader from "../shared/FileUploader";
 import Loader from "../shared/Loader";
 
@@ -43,7 +46,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
   // Query
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
-  
+
   const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
     useUpdatePost();
 
@@ -164,7 +167,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             className="shad-button_primary whitespace-nowrap"
             disabled={isLoadingCreate || isLoadingUpdate}
           >
-            {isLoadingCreate || isLoadingUpdate && <Loader />}
+            {isLoadingCreate || (isLoadingUpdate && <Loader />)}
             {action} Post
           </Button>
         </div>
