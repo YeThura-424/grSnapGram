@@ -1,9 +1,9 @@
-import React from 'react'
 import Loader from './Loader';
 import GridPostList from './GridPostList';
 
 type SearchResultProps = {
   isSearchFetching: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchedPosts: any;
 };
 
