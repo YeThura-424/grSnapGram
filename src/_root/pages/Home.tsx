@@ -61,7 +61,7 @@ const Home = () => {
           {shouldShowPosts ? (<p className="text-light-4 mt-10 text-center w-full">End of posts</p>) :
             (
               posts.pages.map((item) => (
-                <HomePageItem posts={item?.documents} />
+                <HomePageItem posts={item?.documents} key={item} />
               ))
             )}
         </div>
