@@ -13,7 +13,7 @@ const HomePageItem = ({
   return (
     <div className="flex flex-col flex-1 gap-9 w-full ">
       {posts.map((post) => (
-        <PostCard post={post} />
+        <PostCard post={post} key={post} />
       ))}
     </div>
   );
