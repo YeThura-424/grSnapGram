@@ -15,9 +15,9 @@ export const INITIAL_USER = {
 const INITIAL_STATE = {
   user: INITIAL_USER,
   isLoading: false,
+  setUser: () => { },
   isAuthenticated: false,
-  setUser: () => {},
-  setIsAuthenticated: () => {},
+  setIsAuthenticated: () => { },
   checkAuthUser: async () => false as boolean,
 };
 
@@ -27,7 +27,7 @@ type IContextType = {
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  checkAuthUser: Promise<boolean>;
+  checkAuthUser: () => Promise<boolean>;
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
