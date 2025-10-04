@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { Models } from "appwrite";
 import { Input } from "@/components/ui";
 import useDebounce from "@/hooks/useDebounce";
 import { useGetPosts, useSearchPosts } from "@/lib/react-query/queriesAndMutations";
@@ -10,7 +10,7 @@ import { useInView } from 'react-intersection-observer'
 
 export type SearchResultProps = {
   isSearchFetching: boolean;
-  searchedPosts: any;
+  searchedPosts: Models.Document[] | [];
 };
 
 const Explore = () => {

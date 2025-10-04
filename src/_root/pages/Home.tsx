@@ -1,6 +1,4 @@
-import { Models } from "appwrite";
-
-import { useGetPosts, useGetRecentPosts, useGetUsers } from "@/lib/react-query/queriesAndMutations";
+import { useGetPosts, useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import Loader from "@/components/shared/Loader";
 import UserCard from "@/components/shared/UserCard";
 import { useInView } from "react-intersection-observer";
@@ -61,7 +59,7 @@ const Home = () => {
           {shouldShowPosts ? (<p className="text-light-4 mt-10 text-center w-full">End of posts</p>) :
             (
               posts.pages.map((item) => (
-                <HomePageItem posts={item?.documents} key={item} />
+                <HomePageItem posts={item?.documents} />
               ))
             )}
         </div>
